@@ -38,6 +38,10 @@ extension Target {
       return []
     }
   }
+    
+  static func all() -> [Target] {
+    return [.target(name: "All", dependencies: ["RxSwift", "RxCocoa", "RxBlocking", "RxTest"])]
+  }
 }
 
 let package = Package(
@@ -50,11 +54,13 @@ let package = Package(
       .library(name: "RxRelay", targets: ["RxRelay"]),
       .library(name: "RxBlocking", targets: ["RxBlocking"]),
       .library(name: "RxTest", targets: ["RxTest"]),
+      .library(name: "RxAll", targets: ["All"]),
       .library(name: "RxSwift-Dynamic", type: .dynamic, targets: ["RxSwift"]),
       .library(name: "RxCocoa-Dynamic", type: .dynamic, targets: ["RxCocoa"]),
       .library(name: "RxRelay-Dynamic", type: .dynamic, targets: ["RxRelay"]),
       .library(name: "RxBlocking-Dynamic", type: .dynamic, targets: ["RxBlocking"]),
       .library(name: "RxTest-Dynamic", type: .dynamic, targets: ["RxTest"]),
+      .library(name: "RxAll-Dynamic", type: .dynamic, targets: ["All"]),
     ],
     Product.allTests()
   ] as [[Product]]).flatMap { $0 },
@@ -69,7 +75,8 @@ let package = Package(
       .target(name: "RxBlocking", dependencies: ["RxSwift"]),
       .target(name: "RxTest", dependencies: ["RxSwift"]),
     ],
-    Target.allTests()
+    Target.allTests(),
+    Target.all()
   ] as [[Target]]).flatMap { $0 },
   swiftLanguageVersions: [.v5]
 )
