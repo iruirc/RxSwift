@@ -40,7 +40,13 @@ extension Target {
   }
     
   static func all() -> [Target] {
-    return [.target(name: "All", dependencies: ["RxSwift", "RxCocoa", "RxBlocking", "RxTest"])]
+      if buildTests {
+          return [.target(name: "All",
+                          dependencies: ["RxSwift", "RxCocoa", "RxRelay", "RxBlocking", "RxTest"])]
+      } else {
+          return [.target(name: "All",
+                          dependencies: ["RxSwift", "RxCocoa", "RxRelay"])]
+      }
   }
 }
 
